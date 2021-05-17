@@ -4,12 +4,11 @@ import numpy.linalg as algo
 import seaborn as sns
 import matplotlib.pyplot as plt
 from SBM import SBM
-from Algo_spectral import Algo_Spectral
+from Clustering import Methode_Spectrale
 
 def erreur(p, q, n):
     model=SBM(p, q, n, 2)
-    algo=Algo_Spectral(model.M)
-    positifs=algo.Partitionning()
+    positifs, labels=Methode_Spectrale(model.M)
     #borne_sup=288*p/((p-q)**2)
     erreurs=0
     for result in positifs:
