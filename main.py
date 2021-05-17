@@ -5,6 +5,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from SBM import SBM
 from Algo_spectral import Algo_Spectral
+
 def erreur(p, q, n):
     model=SBM(p, q, n, 2)
     algo=Algo_Spectral(model.M)

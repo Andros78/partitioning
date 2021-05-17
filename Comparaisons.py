@@ -1,18 +1,16 @@
 from numpy.lib.type_check import nan_to_num
-from Algo_spectral import Algo_Spectral
+from Clustering import Methode_Spectrale, Methode_K_means
 from sklearn.cluster import KMeans
 from SBM import SBM
 from scipy.linalg import eigh
 #import matplotlib.pyplot as plt
 from time import time 
 
-n=1000
+n=100
 p=0.7
 q=0.5
-def Clustering_kmean(U):
+def Clustering_kmean(labels):
     global n
-    kmeans = KMeans(n_clusters=2, random_state=0).fit(U)
-    labels=kmeans.labels_
     erreurs=0
     sum=0
     for i in range(int(n/2)):
@@ -39,8 +37,7 @@ def comparaisons_algo():
     Ln=model.Ln
 
     t_start=time()
-    algo=Algo_Spectral(M)
-    positifs=algo.Partitionning()
+    positifs, label=Methode_Spectrale(M)
     borne_sup=288*p/((p-q)**2)
     print("Borne sup:", borne_sup)
     erreurs_sp=0
@@ -50,21 +47,23 @@ def comparaisons_algo():
     print("erreurs sectrales:", erreurs_sp, "in: ", time()-t_start)
 
     t_start=time()
-    vp, U_L=eigh(L, subset_by_index=[0,2])
-    erreurs_L=Clustering_kmean(U_L)
+    labels=Methode_K_means(L)
+    erreurs_L=Clustering_kmean(labels)
     print("erreurs Kmeans L:", erreurs_L, "in: ", time()-t_start)
 
     t_start=time()
-    vp_adj, U_A=eigh(M, subset_by_index=[n-2, n-1])
-    erreurs_A=Clustering_kmean(U_A)
+    labels=Methode_K_means(M, mtype="A")
+    erreurs_A=Clustering_kmean(labels)
     print("erreurs adj:",erreurs_A, "in: ", time()-t_start)
 
     t_start=time()
-    vpln, U_Ln=eigh(Ln, subset_by_index=[0, 2])
-    erreurs_Ln=Clustering_kmean(U_Ln)
+    labels=Methode_K_means(Ln)
+    erreurs_Ln=Clustering_kmean(labels)
     print("erreurs Ln", erreurs_Ln, "in: ", time()-t_start)
 
     return erreurs_sp, erreurs_A, erreurs_L, erreurs_Ln
+
+
 N=10
 erreurs_sp, erreurs_A, erreurs_L, erreurs_Ln=[0]*N, [0]*N, [0]*N, [0]*N
 for i in range(N):
