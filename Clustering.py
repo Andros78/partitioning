@@ -2,6 +2,8 @@ import numpy as np
 from scipy.linalg import eigh
 from sklearn.cluster import KMeans
 
+
+
 def Methode_Spectrale(M):
     """ 
     Entrée: Matrice d'ajacence
@@ -9,17 +11,21 @@ def Methode_Spectrale(M):
     """
 
     n=len(M)
-    #selection de la seconde plus grande valeur propre de M et de son vecteur propre associé         
-    Valeur_propre_2, Vecteur_propre_2=eigh(M, subset_by_index=[n-2,n-2])  
-    positifs=[]
+    #selection de la seconde plus grande valeur propre en valeur absolue 
+    # de M et de son vecteur propre associé         
+    VP2_pos, VectP2_pos=eigh(M, subset_by_index=[n-2,n-2])  
+    VP2_neg, VectP2_neg=eigh(M, subset_by_index=[0,0])
+    if abs(VP2_pos) > abs(VP2_neg):
+        VP2_abs_max, VectP2_abs_max=abs(VP2_pos),  VectP2_pos
+    else:
+        VP2_abs_max, VectP2_abs_max=abs(VP2_neg),  VectP2_neg
+
     label=[0]*n
     for i in range(n):
-        if Vecteur_propre_2[i]<0:
-            positifs.append(i)
-            label[i]=0
-        else:
+        if VectP2_abs_max[i]<0:
             label[i]=1
-    return positifs, label
+    return label
+
 
 def Methode_K_means(M, mtype="L"):
     """
@@ -28,11 +34,11 @@ def Methode_K_means(M, mtype="L"):
     """
     n=len(M)
     if mtype=="L":
-        start_index=0
-        end_index=2
+        start_index=1
+        end_index=1
     if mtype=="A":
         start_index=n-2
-        end_index=n-1
+        end_index=n-2
     
     vp, U=eigh(M, subset_by_index=[start_index, end_index])
     kmeans = KMeans(n_clusters=2, random_state=0).fit(U)

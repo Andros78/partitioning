@@ -6,7 +6,7 @@ from scipy.linalg import eigh
 #import matplotlib.pyplot as plt
 from time import time 
 
-n=100
+n=1000
 p=0.7
 q=0.5
 def Clustering_kmean(labels):
