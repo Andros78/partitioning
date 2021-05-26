@@ -7,7 +7,7 @@ from sklearn.cluster import KMeans
 def Methode_Spectrale(M):
     """ 
     Entrée: Matrice d'ajacence
-    Sortie: Partition des individus en 2 communautés
+    Sortie: Partition des individus en 2 communautés par la Méthode Spéctrale
     """
 
     n=len(M)
