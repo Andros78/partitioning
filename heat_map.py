@@ -57,4 +57,3 @@ def heat_map_generator(n , resolution):
 heat_map_generator(100, 101)
 
 
-
