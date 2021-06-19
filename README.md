@@ -1,5 +1,5 @@
 # partitioning
 
-L'algorithme de Kernighan Lin n'est pas de moi.
-La Heat map générée par heat_map.py est en format png dans le dossier.
-Comparaisons.py n'est pas encore très lisible, je suis entrain d'y travailler
+Voici le code qui complète mon rapport de stage à l'Inria sur la théorie spectrale des graphes.
+Année d'étude: L2 au CPES.
+Andres Bodenheimer
