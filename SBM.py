@@ -40,13 +40,14 @@ class SBM:
         for i in range(self.n):
             self.D[i][i]=sum(self.M[i])
 
+
     def Laplacian_Matrix(self):
         self.L=self.D - self.M
 
     def Normalized_Laplacian(self):
         Do=np.eye(self.n)
         for i in range(self.n):
-            Do[i][i]=self.D[i][i]**-1/2
+            Do[i][i]=self.D[i][i]**(-1/2)
         self.Ln = np.dot(np.dot(Do, self.L), Do)
 
 
